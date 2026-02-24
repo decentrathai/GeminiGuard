@@ -104,10 +104,10 @@ Current AI services can't handle truly sensitive data. GeminiGuard's zero-retent
 
 **Gemini 2.0 Flash Integration:**
 
-1. **Vision API (`gemini-2.0-flash-exp`)**
+1. **Vision API (`gemini-2.5-flash`)**
    ```javascript
    const visionResponse = await gemini.chat.completions.create({
-     model: 'gemini-2.0-flash-exp',
+     model: 'gemini-2.5-flash',
      messages: [{
        role: 'user',
        content: [
@@ -121,10 +121,10 @@ Current AI services can't handle truly sensitive data. GeminiGuard's zero-retent
    - No intermediate storage
    - Buffer immediately discarded post-processing
 
-2. **Chat Completions API (`gemini-2.0-flash-exp`)**
+2. **Chat Completions API (`gemini-2.5-flash`)**
    ```javascript
    const summaryResponse = await gemini.chat.completions.create({
-     model: 'gemini-2.0-flash-exp',
+     model: 'gemini-2.5-flash',
      messages: [
        { role: 'system', content: 'Privacy-focused assistant...' },
        { role: 'user', content: `Summarize: ${analysis}` }
@@ -191,7 +191,7 @@ Current AI services can't handle truly sensitive data. GeminiGuard's zero-retent
    - Future: Google Cloud TTS with in-memory streaming
 
 4. **Gemini Model Selection:**
-   - `gemini-2.0-flash-exp` is experimental but offers best latency
+   - `gemini-2.5-flash` is experimental but offers best latency
    - Trade-off: Stability vs. speed for hackathon demo
    - Fallback: Can easily switch to `gemini-1.5-pro` for production
 
@@ -247,7 +247,7 @@ Current AI services can't handle truly sensitive data. GeminiGuard's zero-retent
 - Transparency (open-source code) builds trust more than privacy policies
 
 **Gemini-Specific Discoveries:**
-- `gemini-2.0-flash-exp` balances speed and quality well
+- `gemini-2.5-flash` balances speed and quality well
 - Base URL configuration is the only change needed for OpenAI SDK migration
 - Gemini's multimodal context handling is superior for document analysis
 
@@ -362,7 +362,7 @@ Make AI accessible for the most sensitive use cases by proving privacy and power
 ## Prize Category Alignment
 
 ### Best Use of Gemini Vision (PRIMARY)
-- ✅ Showcases `gemini-2.0-flash-exp` vision capabilities
+- ✅ Showcases `gemini-2.5-flash` vision capabilities
 - ✅ Real-world document analysis use case
 - ✅ Demonstrates multimodal context handling
 - ✅ Production-ready integration

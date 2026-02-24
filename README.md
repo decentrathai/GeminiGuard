@@ -142,8 +142,8 @@ List available Gemini models and capabilities.
 Edit `server.js`:
 ```javascript
 const models = {
-  vision: 'gemini-2.0-flash-exp',  // Change to gemini-1.5-pro, etc.
-  chat: 'gemini-2.0-flash-exp',
+  vision: 'gemini-2.5-flash',
+  chat: 'gemini-2.5-flash',
   tts: 'tts-1'
 };
 ```

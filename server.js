@@ -25,8 +25,8 @@ console.log('[CONFIG] Using Gemini API endpoint');
 
 // Gemini 2.0 Flash models
 const models = {
-  vision: 'gemini-2.0-flash-exp',
-  chat: 'gemini-2.0-flash-exp',
+  vision: 'gemini-2.5-flash',
+  chat: 'gemini-2.5-flash',
   tts: 'tts-1' // Keep Venice TTS for now, or use Google TTS API separately
 };
 
@@ -231,8 +231,8 @@ app.listen(PORT, () => {
 🚀 Server running on port ${PORT}
 🔐 Privacy mode: ZERO-RETENTION
 🎯 Gemini API endpoints active:
-   • Vision: gemini-2.0-flash-exp
-   • Chat: gemini-2.0-flash-exp
+   • Vision: gemini-2.5-flash
+   • Chat: gemini-2.5-flash
    • Audio: TTS (pending)
 
 📊 Endpoints:
