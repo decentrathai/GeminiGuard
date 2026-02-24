@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeminiGuard - Privacy-Preserving Multimodal AI</title>
+    <title>PrivacyGuard Live Agent - Real-Time Voice Conversation</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -54,8 +54,61 @@
             font-weight: bold;
         }
 
+        .live-badge {
+            background: #ea4335;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         .content {
             padding: 40px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            background: #f8f9ff;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #6b7280;
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #1a73e8;
+            color: white;
+        }
+
+        .tab:hover {
+            background: #4285f4;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .section {
@@ -88,65 +141,8 @@
             background: #fffef0;
         }
 
-        .upload-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-
         input[type="file"] {
             display: none;
-        }
-
-        .options {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f8f9ff;
-            border-radius: 10px;
-        }
-
-        .option-group {
-            margin: 10px 0;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #1a73e8;
-        }
-
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #4285f4;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .checkbox-label input {
-            margin-right: 10px;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
         }
 
         .btn {
@@ -173,93 +169,101 @@
             transform: none;
         }
 
-        .results {
-            margin-top: 30px;
-            padding: 20px;
+        .btn-danger {
+            background: linear-gradient(135deg, #ea4335 0%, #fbbc04 100%);
+        }
+
+        /* Live Voice UI */
+        .live-container {
             background: #f8f9ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .live-status {
+            text-align: center;
+            padding: 20px;
+            background: white;
             border-radius: 10px;
-            display: none;
-        }
-
-        .results.show {
-            display: block;
-        }
-
-        .result-section {
             margin-bottom: 20px;
         }
 
-        .result-section h3 {
-            color: #1a73e8;
-            margin-bottom: 10px;
+        .live-status.active {
+            background: #e8f5e9;
+            border: 2px solid #34a853;
         }
 
-        .result-content {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #4285f4;
-            white-space: pre-wrap;
-        }
-
-        .audio-player {
-            margin-top: 15px;
-            width: 100%;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            display: none;
-        }
-
-        .loading.show {
-            display: block;
-        }
-
-        .spinner {
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #4285f4;
+        .mic-button {
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #ea4335 0%, #fbbc04 100%);
+            border: none;
+            cursor: pointer;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            color: white;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(234, 67, 53, 0.4);
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .mic-button:hover {
+            transform: scale(1.1);
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+        .mic-button.recording {
+            animation: recordPulse 1.5s infinite;
         }
 
-        .feature-card {
-            background: #f8f9ff;
-            padding: 20px;
+        @keyframes recordPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(234, 67, 53, 0.4); }
+            50% { transform: scale(1.1); box-shadow: 0 15px 40px rgba(234, 67, 53, 0.6); }
+        }
+
+        .transcript {
+            background: white;
+            border: 2px solid #e5e7eb;
             border-radius: 10px;
-            text-align: center;
+            padding: 20px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
         }
 
-        .feature-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
+        .message {
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 10px;
         }
 
-        .feature-card h3 {
-            color: #1a73e8;
-            margin-bottom: 8px;
-            font-size: 1.1em;
+        .message.user {
+            background: #e3f2fd;
+            border-left: 4px solid #1a73e8;
         }
 
-        .feature-card p {
-            color: #6b7280;
-            font-size: 0.9em;
+        .message.assistant {
+            background: #e8f5e9;
+            border-left: 4px solid #34a853;
+        }
+
+        .message.system {
+            background: #fff3e0;
+            border-left: 4px solid #fbbc04;
+            font-style: italic;
+        }
+
+        .image-preview {
+            max-width: 300px;
+            max-height: 200px;
+            border-radius: 10px;
+            margin: 15px auto;
+            display: block;
+            border: 2px solid #e5e7eb;
         }
 
         .privacy-info {
@@ -292,140 +296,431 @@
             margin-right: 8px;
         }
 
-        .gemini-badge {
-            background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 15px;
-            display: inline-block;
-            margin: 10px 0;
-            font-size: 0.9em;
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #4285f4;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .result-section {
+            margin-bottom: 20px;
+        }
+
+        .result-section h3 {
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+
+        .result-content {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4285f4;
+            white-space: pre-wrap;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🛡️ GeminiGuard</h1>
-            <p class="subtitle">Privacy-Preserving Multimodal AI Agent</p>
-            <div class="privacy-badge">ZERO DATA RETENTION</div>
-            <div class="gemini-badge">Powered by Gemini 2.5 Flash</div>
+            <h1>🛡️ PrivacyGuard Live Agent</h1>
+            <p class="subtitle">Real-Time Conversational Privacy Agent</p>
+            <div>
+                <span class="privacy-badge">ZERO DATA RETENTION</span>
+                <span class="live-badge">🎤 LIVE VOICE</span>
+            </div>
         </div>
 
         <div class="content">
             <div class="privacy-info">
                 <h3>🛡️ Privacy Guarantee</h3>
                 <ul>
-                    <li>Your files are NEVER stored on our servers</li>
-                    <li>Images processed in-memory only, immediately discarded</li>
-                    <li>Zero-retention architecture with Gemini API</li>
-                    <li>HIPAA-safe, GDPR-compliant</li>
+                    <li>Your files and voice are NEVER stored on our servers</li>
+                    <li>Images and audio processed in-memory only, immediately discarded</li>
+                    <li>Real-time streaming with zero data retention</li>
+                    <li>Enterprise-grade, GDPR-compliant architecture</li>
                 </ul>
             </div>
 
-            <div class="features">
-                <div class="feature-card">
-                    <div class="feature-icon">👁️</div>
-                    <h3>Vision Analysis</h3>
-                    <p>Gemini 2.5 Flash vision without storage</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧠</div>
-                    <h3>Smart Reasoning</h3>
-                    <p>Extract insights from sensitive documents</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔊</div>
-                    <h3>Voice Response</h3>
-                    <p>AI analysis read aloud (coming soon)</p>
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('live')">🎤 Live Voice</button>
+                <button class="tab" onclick="switchTab('upload')">📁 Upload & Analyze</button>
+                <button class="tab" onclick="switchTab('text')">📝 Text Only</button>
+            </div>
+
+            <!-- Live Voice Tab -->
+            <div id="live-tab" class="tab-content active">
+                <div class="live-container">
+                    <div class="live-status" id="liveStatus">
+                        <h3>🔴 Not Connected</h3>
+                        <p>Click "Start Live Session" to begin</p>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="btn" id="startSessionBtn" onclick="startLiveSession()">Start Live Session</button>
+                        <button class="btn btn-danger" id="endSessionBtn" onclick="endLiveSession()" style="display: none;">End Session</button>
+                    </div>
+
+                    <!-- Image Upload for Live Session -->
+                    <div style="margin: 20px 0; text-align: center;">
+                        <h3 style="color: #1a73e8; margin-bottom: 10px;">Show a Document (Optional)</h3>
+                        <input type="file" id="liveImageInput" accept="image/*" style="display: none;" onchange="uploadLiveImage()">
+                        <button class="btn" onclick="document.getElementById('liveImageInput').click()">📷 Upload Image</button>
+                        <div id="liveImagePreview"></div>
+                    </div>
+
+                    <!-- Voice Input -->
+                    <div style="text-align: center; margin: 30px 0;">
+                        <h3 style="color: #1a73e8; margin-bottom: 15px;">Talk to the Agent</h3>
+                        <button class="mic-button" id="micButton" onclick="toggleRecording()" disabled>
+                            🎤
+                        </button>
+                        <p id="micStatus" style="color: #6b7280;">Session not started</p>
+                    </div>
+
+                    <!-- Text Input (alternative to voice) -->
+                    <div style="margin: 20px 0;">
+                        <h3 style="color: #1a73e8; margin-bottom: 10px;">Or Type Your Message</h3>
+                        <textarea id="liveTextInput" placeholder="Type your question or analysis request..." disabled></textarea>
+                        <button class="btn" id="sendTextBtn" onclick="sendTextMessage()" style="margin-top: 10px;" disabled>Send Message</button>
+                    </div>
+
+                    <!-- Conversation Transcript -->
+                    <div class="transcript" id="transcript">
+                        <div class="message system">Conversation will appear here...</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="section">
-                <h2>Upload Image or Document</h2>
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-icon">📁</div>
-                    <p><strong>Click to upload</strong> or drag and drop</p>
-                    <p style="color: #6b7280; margin-top: 10px;">Medical records, prescriptions, invoices, contracts, photos</p>
-                    <input type="file" id="fileInput" accept="image/*">
+            <!-- Upload & Analyze Tab -->
+            <div id="upload-tab" class="tab-content">
+                <div class="section">
+                    <h2>Upload Image or Document</h2>
+                    <div class="upload-area" id="uploadArea">
+                        <div style="font-size: 3em; margin-bottom: 15px;">📁</div>
+                        <p><strong>Click to upload</strong> or drag and drop</p>
+                        <p style="color: #6b7280; margin-top: 10px;">Financial documents, contracts, invoices, legal files, photos</p>
+                        <input type="file" id="fileInput" accept="image/*">
+                    </div>
+                    <div id="fileName" style="margin-top: 15px; color: #4285f4; font-weight: bold;"></div>
                 </div>
-                <div id="fileName" style="margin-top: 15px; color: #4285f4; font-weight: bold;"></div>
+
+                <div style="margin: 20px 0;">
+                    <label style="font-weight: bold; color: #1a73e8; display: block; margin-bottom: 8px;">Custom Prompt (Optional)</label>
+                    <textarea id="customPrompt" placeholder="e.g., 'Extract key financial data and flag anomalies' or leave blank for default analysis"></textarea>
+                </div>
+
+                <button class="btn" id="analyzeBtn" disabled onclick="analyzeDocument()">Analyze Document</button>
+
+                <div class="loading" id="uploadLoading">
+                    <div class="spinner"></div>
+                    <p>Processing with Gemini 2.0 Flash... (zero retention mode)</p>
+                </div>
+
+                <div class="results" id="uploadResults">
+                    <div class="result-section">
+                        <h3>📊 Detailed Analysis</h3>
+                        <div class="result-content" id="analysisContent"></div>
+                    </div>
+                    <div class="result-section">
+                        <h3>📝 Summary</h3>
+                        <div class="result-content" id="summaryContent"></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="options">
-                <div class="option-group">
-                    <label>Custom Prompt (Optional)</label>
-                    <textarea id="customPrompt" placeholder="e.g., 'Extract all medication names and dosages' or leave blank for default analysis"></textarea>
+            <!-- Text Only Tab -->
+            <div id="text-tab" class="tab-content">
+                <div class="section">
+                    <h2>📝 Analyze Sensitive Text</h2>
+                    <textarea id="textInput" placeholder="Paste financial data, contract clauses, legal text, sensitive documents..." style="min-height: 150px;"></textarea>
                 </div>
 
-                <div class="option-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="returnVoice">
-                        <span>Generate voice response (TTS - coming soon)</span>
-                    </label>
-                </div>
-            </div>
-
-            <button class="btn" id="analyzeBtn" disabled>Analyze Document</button>
-
-            <!-- Text-Only Analysis Section -->
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e0e0e0;">
-                <h2 style="color: #1a73e8; margin-bottom: 15px;">📝 Or Paste Sensitive Text</h2>
-                <textarea id="textInput" style="width: 100%; min-height: 100px; padding: 15px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; resize: vertical;" placeholder="Paste prescription text, financial data, contract details..."></textarea>
-                <div style="margin: 10px 0;">
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                        <input type="checkbox" id="returnVoiceText">
-                        <span>Generate voice response (TTS - coming soon)</span>
-                    </label>
-                </div>
                 <button class="btn" id="analyzeTextBtn" onclick="analyzeText()" disabled>Analyze Text</button>
-            </div>
 
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Processing with Gemini 2.5 Flash... (zero retention mode)</p>
-            </div>
-
-            <div class="results" id="results">
-                <div class="result-section">
-                    <h3>📊 Detailed Analysis</h3>
-                    <div class="result-content" id="analysisContent"></div>
+                <div class="loading" id="textLoading">
+                    <div class="spinner"></div>
+                    <p>Processing with Gemini 2.0 Flash...</p>
                 </div>
 
-                <div class="result-section">
-                    <h3>📝 Summary</h3>
-                    <div class="result-content" id="summaryContent"></div>
-                </div>
-
-                <div class="result-section" id="audioSection" style="display: none;">
-                    <h3>🔊 Voice Response</h3>
-                    <audio class="audio-player" id="audioPlayer" controls></audio>
+                <div class="results" id="textResults">
+                    <div class="result-section">
+                        <h3>📊 Analysis</h3>
+                        <div class="result-content" id="textAnalysisContent"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // WebSocket connection
+        let ws = null;
+        let isRecording = false;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let currentImageData = null;
+        let recognition = null;
+
+        // Tab switching
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        // ===== LIVE VOICE SESSION =====
+
+        function startLiveSession() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}`;
+            
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = () => {
+                console.log('WebSocket connected');
+                ws.send(JSON.stringify({ type: 'start_session' }));
+                
+                document.getElementById('liveStatus').className = 'live-status active';
+                document.getElementById('liveStatus').innerHTML = '<h3>🟢 Live Session Active</h3><p>Upload an image or start talking!</p>';
+                document.getElementById('startSessionBtn').style.display = 'none';
+                document.getElementById('endSessionBtn').style.display = 'block';
+                document.getElementById('micButton').disabled = false;
+                document.getElementById('liveTextInput').disabled = false;
+                document.getElementById('sendTextBtn').disabled = false;
+                document.getElementById('micStatus').textContent = 'Click microphone to start talking';
+                
+                addMessage('system', 'Live session started. Zero data retention active.');
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                
+                switch (data.type) {
+                    case 'session_started':
+                        addMessage('system', data.message);
+                        break;
+                    case 'image_received':
+                        addMessage('system', data.message);
+                        break;
+                    case 'response':
+                        addMessage('assistant', data.text);
+                        speakText(data.text);
+                        break;
+                    case 'session_ended':
+                        addMessage('system', data.message);
+                        break;
+                    case 'error':
+                        addMessage('system', 'Error: ' + data.message);
+                        break;
+                }
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                addMessage('system', 'Connection error. Please refresh and try again.');
+            };
+
+            ws.onclose = () => {
+                console.log('WebSocket closed');
+                resetLiveSession();
+            };
+
+            // Initialize Web Speech API for voice input
+            if ('webkitSpeechRecognition' in window) {
+                recognition = new webkitSpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = false;
+                
+                recognition.onresult = (event) => {
+                    const transcript = event.results[event.results.length - 1][0].transcript;
+                    addMessage('user', transcript);
+                    
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        ws.send(JSON.stringify({
+                            type: 'text_message',
+                            text: transcript
+                        }));
+                    }
+                };
+
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    addMessage('system', 'Voice recognition error: ' + event.error);
+                };
+            }
+        }
+
+        function endLiveSession() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'end_session' }));
+                ws.close();
+            }
+            
+            if (recognition) {
+                recognition.stop();
+            }
+            
+            resetLiveSession();
+        }
+
+        function resetLiveSession() {
+            document.getElementById('liveStatus').className = 'live-status';
+            document.getElementById('liveStatus').innerHTML = '<h3>🔴 Not Connected</h3><p>Click "Start Live Session" to begin</p>';
+            document.getElementById('startSessionBtn').style.display = 'block';
+            document.getElementById('endSessionBtn').style.display = 'none';
+            document.getElementById('micButton').disabled = true;
+            document.getElementById('liveTextInput').disabled = true;
+            document.getElementById('sendTextBtn').disabled = true;
+            document.getElementById('micStatus').textContent = 'Session not started';
+            currentImageData = null;
+            isRecording = false;
+        }
+
+        function toggleRecording() {
+            if (!recognition) {
+                alert('Voice recognition not supported in your browser. Please use Chrome or Edge.');
+                return;
+            }
+
+            if (isRecording) {
+                recognition.stop();
+                document.getElementById('micButton').classList.remove('recording');
+                document.getElementById('micStatus').textContent = 'Click to start talking';
+                isRecording = false;
+            } else {
+                recognition.start();
+                document.getElementById('micButton').classList.add('recording');
+                document.getElementById('micStatus').textContent = '🎤 Listening...';
+                isRecording = true;
+            }
+        }
+
+        function uploadLiveImage() {
+            const file = document.getElementById('liveImageInput').files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64Data = e.target.result.split(',')[1];
+                const mimeType = file.type;
+                
+                currentImageData = { data: base64Data, mimeType };
+                
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({
+                        type: 'upload_image',
+                        imageData: base64Data,
+                        mimeType: mimeType
+                    }));
+                }
+                
+                const preview = document.getElementById('liveImagePreview');
+                preview.innerHTML = `<img src="${e.target.result}" class="image-preview" alt="Uploaded image">`;
+                addMessage('system', 'Image uploaded. Ask me about it!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function sendTextMessage() {
+            const text = document.getElementById('liveTextInput').value.trim();
+            if (!text || !ws || ws.readyState !== WebSocket.OPEN) return;
+
+            addMessage('user', text);
+            ws.send(JSON.stringify({
+                type: 'text_message',
+                text: text
+            }));
+            
+            document.getElementById('liveTextInput').value = '';
+        }
+
+        function addMessage(role, content) {
+            const transcript = document.getElementById('transcript');
+            
+            // Clear placeholder
+            if (transcript.children.length === 1 && transcript.children[0].classList.contains('system')) {
+                transcript.innerHTML = '';
+            }
+            
+            const message = document.createElement('div');
+            message.className = `message ${role}`;
+            message.textContent = content;
+            transcript.appendChild(message);
+            transcript.scrollTop = transcript.scrollHeight;
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // ===== UPLOAD & ANALYZE =====
+
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
-        const fileName = document.getElementById('fileName');
         const analyzeBtn = document.getElementById('analyzeBtn');
-        const loading = document.getElementById('loading');
-        const results = document.getElementById('results');
-        const customPrompt = document.getElementById('customPrompt');
-        const returnVoice = document.getElementById('returnVoice');
-
         let selectedFile = null;
 
-        // Click to upload
         uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFileSelect(e.target.files[0]));
 
-        // File selection
-        fileInput.addEventListener('change', (e) => {
-            handleFileSelect(e.target.files[0]);
-        });
-
-        // Drag and drop
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadArea.classList.add('dragover');
@@ -443,26 +738,25 @@
 
         function handleFileSelect(file) {
             if (!file) return;
-
             selectedFile = file;
-            fileName.textContent = `Selected: ${file.name}`;
+            document.getElementById('fileName').textContent = `Selected: ${file.name}`;
             analyzeBtn.disabled = false;
         }
 
-        // Analyze button
-        analyzeBtn.addEventListener('click', async () => {
+        async function analyzeDocument() {
             if (!selectedFile) return;
 
             const formData = new FormData();
             formData.append('file', selectedFile);
-            formData.append('returnVoice', returnVoice.checked);
-            if (customPrompt.value.trim()) {
-                formData.append('prompt', customPrompt.value.trim());
+            
+            const prompt = document.getElementById('customPrompt').value.trim();
+            if (prompt) {
+                formData.append('prompt', prompt);
             }
 
             analyzeBtn.disabled = true;
-            loading.classList.add('show');
-            results.classList.remove('show');
+            document.getElementById('uploadLoading').classList.add('show');
+            document.getElementById('uploadResults').classList.remove('show');
 
             try {
                 const response = await fetch('/api/analyze', {
@@ -473,21 +767,25 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    displayResults(data);
+                    document.getElementById('analysisContent').textContent = data.analysis;
+                    document.getElementById('summaryContent').textContent = data.summary;
+                    document.getElementById('uploadResults').classList.add('show');
                 } else {
                     alert('Error: ' + data.error);
                 }
             } catch (error) {
                 alert('Network error: ' + error.message);
             } finally {
-                loading.classList.remove('show');
+                document.getElementById('uploadLoading').classList.remove('show');
                 analyzeBtn.disabled = false;
             }
-        });
+        }
 
-        // Text input enable/disable
+        // ===== TEXT ANALYSIS =====
+
         const textInput = document.getElementById('textInput');
         const analyzeTextBtn = document.getElementById('analyzeTextBtn');
+
         textInput.addEventListener('input', () => {
             analyzeTextBtn.disabled = !textInput.value.trim();
         });
@@ -496,55 +794,40 @@
             const text = textInput.value.trim();
             if (!text) return;
 
-            const returnVoiceText = document.getElementById('returnVoiceText').checked;
             analyzeTextBtn.disabled = true;
-            loading.classList.add('show');
-            results.classList.remove('show');
+            document.getElementById('textLoading').classList.add('show');
+            document.getElementById('textResults').classList.remove('show');
 
             try {
                 const response = await fetch('/api/analyze-text', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text, returnVoice: returnVoiceText ? 'true' : 'false' })
+                    body: JSON.stringify({ text })
                 });
 
                 const data = await response.json();
+
                 if (response.ok) {
-                    document.getElementById('analysisContent').textContent = data.analysis;
-                    document.getElementById('summaryContent').textContent = 'Text analyzed with zero data retention.';
-                    if (data.audio) {
-                        const audioPlayer = document.getElementById('audioPlayer');
-                        audioPlayer.src = data.audio.data;
-                        document.getElementById('audioSection').style.display = 'block';
-                    } else {
-                        document.getElementById('audioSection').style.display = 'none';
-                    }
-                    results.classList.add('show');
+                    document.getElementById('textAnalysisContent').textContent = data.analysis;
+                    document.getElementById('textResults').classList.add('show');
                 } else {
                     alert('Error: ' + data.error);
                 }
             } catch (error) {
                 alert('Network error: ' + error.message);
             } finally {
-                loading.classList.remove('show');
+                document.getElementById('textLoading').classList.remove('show');
                 analyzeTextBtn.disabled = false;
             }
         }
 
-        function displayResults(data) {
-            document.getElementById('analysisContent').textContent = data.analysis;
-            document.getElementById('summaryContent').textContent = data.summary;
-
-            if (data.audio) {
-                const audioPlayer = document.getElementById('audioPlayer');
-                audioPlayer.src = data.audio.data;
-                document.getElementById('audioSection').style.display = 'block';
-            } else {
-                document.getElementById('audioSection').style.display = 'none';
+        // Enable text input for live session
+        document.getElementById('liveTextInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendTextMessage();
             }
-
-            results.classList.add('show');
-        }
+        });
     </script>
 </body>
 </html>
