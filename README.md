@@ -47,6 +47,18 @@ User Upload → In-Memory Buffer → Gemini 2.0 Flash API → Response → Buffe
 - **File Handling**: Multer (memory-only mode)
 - **Privacy**: Zero-retention architecture
 
+## 🌐 Live Demo
+
+**Try it now: [http://104.248.245.44:3001](http://104.248.245.44:3001)**
+
+### Screenshots
+
+**Landing Page:**
+![GeminiGuard Landing Page](./screenshot-landing.png)
+
+**Analysis Results:**
+![Analysis Results](./screenshot-results.png)
+
 ## 🚀 Quick Start
 
 ### Prerequisites
